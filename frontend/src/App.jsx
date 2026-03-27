@@ -7,6 +7,7 @@ import Register from './pages/Register';
 import Products from './pages/Products';
 import ProductDetail from './pages/ProductDetail';
 import ProductForm from './pages/ProductForm';
+import Orders from './pages/Orders';
 
 function App() {
   return (
@@ -34,6 +35,14 @@ function App() {
                 element={
                   <ProtectedRoute>
                     <ProductForm />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/orders"
+                element={
+                  <ProtectedRoute>
+                    <Orders />
                   </ProtectedRoute>
                 }
               />

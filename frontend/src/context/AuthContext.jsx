@@ -29,8 +29,27 @@ export function AuthProvider({ children }) {
 
   const isAuthenticated = () => !!user?.token;
 
+  // Simple JWT decoder for the payload
+  const getRoles = () => {
+    if (!user?.token) return [];
+    try {
+      const payloadBase64 = user.token.split('.')[1];
+      const decodedJson = atob(payloadBase64);
+      const decoded = JSON.parse(decodedJson);
+      // Depending on the Spring Security setup, it might be in an array or a comma-separated string
+      const authorities = decoded.roles || decoded.authorities || [];
+      return Array.isArray(authorities) ? authorities : [authorities];
+    } catch (e) {
+      console.error("Failed to decode token", e);
+      return [];
+    }
+  };
+
+  const isAdmin = () => getRoles().some(r => r === 'ADMIN' || r.authority === 'ADMIN');
+  const isSeller = () => getRoles().some(r => r === 'SELLER' || r.authority === 'SELLER');
+
   return (
-    <AuthContext.Provider value={{ user, loginUser, logout, isAuthenticated, loading }}>
+    <AuthContext.Provider value={{ user, loginUser, logout, isAuthenticated, isAdmin, isSeller, loading }}>
       {children}
     </AuthContext.Provider>
   );

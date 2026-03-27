@@ -34,10 +34,24 @@ export const login = (data) => api.post('/auth/login', data);
 export const register = (data) => api.post('/auth/register', data);
 
 // Products
-export const getProducts = () => api.get('/products');
+export const getProducts = (categoryId, search) => {
+  const params = new URLSearchParams();
+  if (categoryId) params.append('categoryId', categoryId);
+  if (search) params.append('q', search);
+  return api.get(`/products?${params.toString()}`);
+};
 export const getProduct = (id) => api.get(`/products/${id}`);
 export const createProduct = (data) => api.post('/products', data);
 export const updateProduct = (id, data) => api.put(`/products/${id}`, data);
 export const deleteProduct = (id) => api.delete(`/products/${id}`);
+
+// Categories
+export const getCategories = () => api.get('/categories');
+
+// Orders
+export const createOrder = (data) => api.post('/orders', data);
+export const getMyOrders = () => api.get('/orders');
+export const getOrder = (id) => api.get(`/orders/${id}`);
+export const cancelOrder = (id) => api.put(`/orders/${id}/cancel`);
 
 export default api;

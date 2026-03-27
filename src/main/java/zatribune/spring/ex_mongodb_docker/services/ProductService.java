@@ -16,4 +16,10 @@ public interface ProductService {
     void delete(String id);
 
     Product saveOrUpdateProductForm(ProductDTO productDTO);
+    
+    List<Product> findByCategory(String categoryId);
+    
+    List<Product> findBySeller(String sellerId);
+    
+    List<Product> searchByDescription(String description);
 }

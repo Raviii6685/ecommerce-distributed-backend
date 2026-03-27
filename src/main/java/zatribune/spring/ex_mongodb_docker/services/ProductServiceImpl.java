@@ -51,11 +51,27 @@ public class ProductServiceImpl implements ProductService {
         if (productDTO.getId() != null && !productDTO.getId().isEmpty()) {
             Product existing = productRepository.findById(productDTO.getId())
                     .orElseThrow(() -> new ResourceNotFoundException("Product", "id", productDTO.getId()));
-            product.setUser(existing.getUser());
+            product.setSellerId(existing.getSellerId());
+            product.setCategory(existing.getCategory());
         }
 
         Product savedProduct = productRepository.save(product);
         log.info("Saved Product Id: {}", savedProduct.getId());
         return savedProduct;
+    }
+
+    @Override
+    public List<Product> findByCategory(String categoryId) {
+        return productRepository.findByCategoryId(categoryId);
+    }
+
+    @Override
+    public List<Product> findBySeller(String sellerId) {
+        return productRepository.findBySellerId(sellerId);
+    }
+
+    @Override
+    public List<Product> searchByDescription(String description) {
+        return productRepository.findByDescriptionContainingIgnoreCase(description);
     }
 }

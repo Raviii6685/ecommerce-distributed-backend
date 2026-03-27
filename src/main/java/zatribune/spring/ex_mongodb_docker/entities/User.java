@@ -1,18 +1,21 @@
 package zatribune.spring.ex_mongodb_docker.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.*;
+import org.hibernate.annotations.SQLRestriction;
 import org.hibernate.annotations.UuidGenerator;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -22,7 +25,8 @@ import java.util.Set;
 @Builder
 @Entity
 @Table(name = "app_users")
-public class User implements UserDetails {
+@SQLRestriction("deleted = false")
+public class User extends BaseEntity implements UserDetails {
 
     @Id
     @UuidGenerator
@@ -52,9 +56,8 @@ public class User implements UserDetails {
     private Set<Role> roles = new HashSet<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
     @Builder.Default
-    private Set<Product> products = new HashSet<>();
+    private List<Order> orders = new ArrayList<>();
 
     private Boolean accountNonExpired;
     private Boolean accountNonLocked;

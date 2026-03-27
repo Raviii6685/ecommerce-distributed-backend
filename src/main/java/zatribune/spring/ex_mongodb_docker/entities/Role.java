@@ -2,6 +2,7 @@ package zatribune.spring.ex_mongodb_docker.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.SQLRestriction;
 import org.hibernate.annotations.UuidGenerator;
 import org.springframework.security.core.GrantedAuthority;
 
@@ -12,7 +13,8 @@ import org.springframework.security.core.GrantedAuthority;
 @Builder
 @Entity
 @Table(name = "roles")
-public class Role implements GrantedAuthority {
+@SQLRestriction("deleted = false")
+public class Role extends BaseEntity implements GrantedAuthority {
 
     @Id
     @UuidGenerator

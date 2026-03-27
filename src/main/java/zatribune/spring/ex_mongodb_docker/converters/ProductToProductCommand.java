@@ -10,11 +10,19 @@ public class ProductToProductCommand implements Converter<Product, ProductDTO> {
 
     @Override
     public ProductDTO convert(Product product) {
-        return ProductDTO.builder()
-                .id(product.getId())
-                .description(product.getDescription())
-                .price(product.getPrice())
-                .imageUrl(product.getImageUrl())
-                .build();
+        ProductDTO productCommand = new ProductDTO();
+        productCommand.setId(product.getId());
+        productCommand.setDescription(product.getDescription());
+        productCommand.setPrice(product.getPrice());
+        productCommand.setImageUrl(product.getImageUrl());
+        productCommand.setStock(product.getStock());
+        productCommand.setSellerId(product.getSellerId());
+        
+        if (product.getCategory() != null) {
+            productCommand.setCategoryId(product.getCategory().getId());
+            productCommand.setCategoryName(product.getCategory().getName());
+        }
+        
+        return productCommand;
     }
 }
