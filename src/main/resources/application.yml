@@ -46,12 +46,25 @@ spring:
     activate:
       on-profile: prod
   datasource:
-    url: jdbc:postgresql://localhost:5432/products_db
-    username: postgres
-    password: postgres
-    driver-class-name: org.postgresql.Driver
+    primary:
+      jdbc-url: jdbc:postgresql://10.128.0.4:5432/ecommerce_db
+      username: postgres
+      password: postgres123
+      driver-class-name: org.postgresql.Driver
+    replica:
+      jdbc-url: jdbc:postgresql://10.128.0.2:5432/ecommerce_db
+      username: postgres
+      password: postgres123
+      driver-class-name: org.postgresql.Driver
+    replica2:
+      jdbc-url: jdbc:postgresql://10.128.0.3:5432/ecommerce_db
+      username: postgres
+      password: postgres123
+      driver-class-name: org.postgresql.Driver
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
   h2:
     console:
       enabled: false
