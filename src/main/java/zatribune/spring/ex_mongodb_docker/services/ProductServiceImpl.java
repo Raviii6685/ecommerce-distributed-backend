@@ -2,6 +2,8 @@ package zatribune.spring.ex_mongodb_docker.services;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import org.springframework.transaction.annotation.Transactional;
@@ -29,6 +31,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     @Transactional(readOnly = true)
+    @Cacheable(value = "product", key = "#id")
     public Product getById(String id) {
         return productRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Product", "id", id));
@@ -36,12 +39,14 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     @Transactional
+    @CacheEvict(value = "product", key = "#product.getId()", condition = "#product.getId() != null")
     public Product saveOrUpdate(Product product) {
         return productRepository.save(product);
     }
 
     @Override
     @Transactional
+    @CacheEvict(value = "product", key = "#id")
     public void delete(String id) {
         if (!productRepository.existsById(id)) {
             throw new ResourceNotFoundException("Product", "id", id);
@@ -51,6 +56,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     @Transactional
+    @CacheEvict(value = "product", key = "#productDTO.getId()", condition = "#productDTO.getId() != null")
     public Product saveOrUpdateProductForm(ProductDTO productDTO) {
         Product product = productCommandToProduct.convert(productDTO);
 

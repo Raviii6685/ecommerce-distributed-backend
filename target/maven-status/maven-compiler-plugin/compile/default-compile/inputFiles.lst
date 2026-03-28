@@ -2,6 +2,7 @@
 /Users/home_folder/project-replication/springboot-mongodb-example/src/main/java/zatribune/spring/ex_mongodb_docker/bootstrap/DevBootstrap.java
 /Users/home_folder/project-replication/springboot-mongodb-example/src/main/java/zatribune/spring/ex_mongodb_docker/config/AuditConfig.java
 /Users/home_folder/project-replication/springboot-mongodb-example/src/main/java/zatribune/spring/ex_mongodb_docker/config/CorsConfig.java
+/Users/home_folder/project-replication/springboot-mongodb-example/src/main/java/zatribune/spring/ex_mongodb_docker/config/DataSourceConfig.java
 /Users/home_folder/project-replication/springboot-mongodb-example/src/main/java/zatribune/spring/ex_mongodb_docker/config/JwtAuthFilter.java
 /Users/home_folder/project-replication/springboot-mongodb-example/src/main/java/zatribune/spring/ex_mongodb_docker/config/PasswordEncoderConfig.java
 /Users/home_folder/project-replication/springboot-mongodb-example/src/main/java/zatribune/spring/ex_mongodb_docker/config/RedisConfig.java

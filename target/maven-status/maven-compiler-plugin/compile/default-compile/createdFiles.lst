@@ -16,6 +16,7 @@ zatribune/spring/ex_mongodb_docker/dto/RegisterRequest.class
 zatribune/spring/ex_mongodb_docker/services/OrderService.class
 zatribune/spring/ex_mongodb_docker/services/ProductServiceImpl.class
 zatribune/spring/ex_mongodb_docker/entities/Product.class
+zatribune/spring/ex_mongodb_docker/config/DataSourceConfig.class
 zatribune/spring/ex_mongodb_docker/repositories/CategoryRepository.class
 zatribune/spring/ex_mongodb_docker/services/OrderServiceImpl.class
 zatribune/spring/ex_mongodb_docker/dto/AuthResponse$AuthResponseBuilder.class
@@ -45,6 +46,7 @@ zatribune/spring/ex_mongodb_docker/entities/Role$RoleBuilder.class
 zatribune/spring/ex_mongodb_docker/controllers/OrderController.class
 zatribune/spring/ex_mongodb_docker/config/RedisConfig.class
 zatribune/spring/ex_mongodb_docker/entities/OrderItem$OrderItemBuilder.class
+zatribune/spring/ex_mongodb_docker/config/DataSourceConfig$1.class
 zatribune/spring/ex_mongodb_docker/repositories/RoleRepository.class
 zatribune/spring/ex_mongodb_docker/repositories/OrderItemRepository.class
 zatribune/spring/ex_mongodb_docker/dto/AuthResponse.class
