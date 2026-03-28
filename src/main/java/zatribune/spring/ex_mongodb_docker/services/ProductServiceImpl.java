@@ -25,6 +25,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     @Transactional(readOnly = true) 
+    @Cacheable(value = "products")
     public List<Product> listAll() {
         return productRepository.findAll();
     }
@@ -39,7 +40,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     @Transactional
-    @CacheEvict(value = "product", key = "#product.getId()", condition = "#product.getId() != null")
+    @CacheEvict(value = {"products", "product"}, allEntries = true, condition = "#product.getId() != null")
     public Product saveOrUpdate(Product product) {
         return productRepository.save(product);
     }
@@ -75,6 +76,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     @Transactional(readOnly = true)
+    @Cacheable(value = "products-by-category", key = "#categoryId")
     public List<Product> findByCategory(String categoryId) {
         return productRepository.findByCategoryId(categoryId);
     }

@@ -9,7 +9,6 @@ import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSeriali
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 @Configuration
-@ConditionalOnProperty(name = "spring.data.redis.host", matchIfMissing = false)
 public class RedisConfig {
 
     @Bean
