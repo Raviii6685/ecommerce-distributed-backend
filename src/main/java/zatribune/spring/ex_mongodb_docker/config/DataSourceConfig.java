@@ -36,7 +36,7 @@ public class DataSourceConfig {
     public DataSource replica2DataSource() {
         return DataSourceBuilder.create().build();
     }
-
+    
     @Bean
     @Primary
     public DataSource routingDataSource(
