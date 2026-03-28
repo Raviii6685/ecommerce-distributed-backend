@@ -1,6 +1,7 @@
 package zatribune.spring.ex_mongodb_docker.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
@@ -26,6 +27,7 @@ import java.util.Set;
 @Entity
 @Table(name = "app_users")
 @SQLRestriction("deleted = false")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class User extends BaseEntity implements UserDetails {
 
     @Id
@@ -57,6 +59,7 @@ public class User extends BaseEntity implements UserDetails {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @Builder.Default
+    @JsonIgnore
     private List<Order> orders = new ArrayList<>();
 
     private Boolean accountNonExpired;

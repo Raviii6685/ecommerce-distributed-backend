@@ -32,6 +32,7 @@ public class ProductCommandToProduct implements Converter<ProductDTO, Product> {
         product.setPrice(source.getPrice());
         product.setImageUrl(source.getImageUrl());
         product.setStock(source.getStock());
+        product.setSellerId(source.getSellerId());
         
         if (source.getCategoryId() != null && !source.getCategoryId().isEmpty()) {
             product.setCategory(categoryRepository.findById(source.getCategoryId())

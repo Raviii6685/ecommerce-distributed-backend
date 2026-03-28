@@ -1,0 +1,1 @@
+find /Users/home_folder/project-replication/springboot-mongodb-example/src/main/java/zatribune/spring/ex_mongodb_docker -type f \( -name "*.java" -o -name "*.yaml" -o -name "*.yml" -o -name "*.properties" \) | sort | while read f; do echo "=== $f ==="; cat "$f"; done > /Users/home_folder/combined_code.txt

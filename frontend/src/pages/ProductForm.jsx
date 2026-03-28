@@ -1,35 +1,41 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
-import { getProduct, createProduct, updateProduct } from '../services/api';
+import { getProduct, createProduct, updateProduct, getCategories } from '../services/api';
 
 export default function ProductForm() {
   const { id } = useParams();
   const isEdit = !!id;
-  const [form, setForm] = useState({ description: '', price: '', imageUrl: '' });
+  const [form, setForm] = useState({ description: '', price: '', imageUrl: '', categoryId: '', stock: '' });
+  const [categories, setCategories] = useState([]);
   const [error, setError] = useState('');
   const [fieldErrors, setFieldErrors] = useState({});
   const [loading, setLoading] = useState(false);
-  const [fetching, setFetching] = useState(isEdit);
+  const [fetching, setFetching] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (isEdit) {
-      const fetchProduct = async () => {
-        try {
+    const initForm = async () => {
+      try {
+        const catsRes = await getCategories();
+        setCategories(catsRes.data);
+        
+        if (isEdit) {
           const res = await getProduct(id);
           setForm({
             description: res.data.description || '',
             price: res.data.price?.toString() || '',
             imageUrl: res.data.imageUrl || '',
+            categoryId: res.data.categoryId || '',
+            stock: res.data.stock?.toString() || '',
           });
-        } catch (err) {
-          setError('Failed to load product');
-        } finally {
-          setFetching(false);
         }
-      };
-      fetchProduct();
-    }
+      } catch (err) {
+        setError('Failed to load form data');
+      } finally {
+        setFetching(false);
+      }
+    };
+    initForm();
   }, [id, isEdit]);
 
   const handleSubmit = async (e) => {
@@ -42,6 +48,8 @@ export default function ProductForm() {
       description: form.description,
       price: parseFloat(form.price),
       imageUrl: form.imageUrl || null,
+      categoryId: form.categoryId || null,
+      stock: parseInt(form.stock) || 0,
     };
 
     try {
@@ -111,6 +119,34 @@ export default function ProductForm() {
               required
             />
             {fieldErrors.price && <span className="field-error">{fieldErrors.price}</span>}
+          </div>
+          <div className="form-group">
+            <label htmlFor="product-category">Category</label>
+            <select
+              id="product-category"
+              value={form.categoryId}
+              onChange={(e) => setForm({ ...form, categoryId: e.target.value })}
+              required
+            >
+              <option value="" disabled>Select a Category</option>
+              {categories.map((cat) => (
+                <option key={cat.id} value={cat.id}>{cat.name}</option>
+              ))}
+            </select>
+            {fieldErrors.categoryId && <span className="field-error">{fieldErrors.categoryId}</span>}
+          </div>
+          <div className="form-group">
+            <label htmlFor="product-stock">Stock</label>
+            <input
+              id="product-stock"
+              type="number"
+              min="0"
+              placeholder="0"
+              value={form.stock}
+              onChange={(e) => setForm({ ...form, stock: e.target.value })}
+              required
+            />
+            {fieldErrors.stock && <span className="field-error">{fieldErrors.stock}</span>}
           </div>
           <div className="form-group">
             <label htmlFor="product-imageUrl">Image URL (optional)</label>
