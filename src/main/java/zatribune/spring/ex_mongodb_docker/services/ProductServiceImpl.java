@@ -3,6 +3,8 @@ package zatribune.spring.ex_mongodb_docker.services;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+
+import org.springframework.transaction.annotation.Transactional;
 import zatribune.spring.ex_mongodb_docker.converters.ProductCommandToProduct;
 import zatribune.spring.ex_mongodb_docker.dto.ProductDTO;
 import zatribune.spring.ex_mongodb_docker.entities.Product;
@@ -20,22 +22,26 @@ public class ProductServiceImpl implements ProductService {
     private final ProductCommandToProduct productCommandToProduct;
 
     @Override
+    @Transactional(readOnly = true) 
     public List<Product> listAll() {
         return productRepository.findAll();
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Product getById(String id) {
         return productRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Product", "id", id));
     }
 
     @Override
+    @Transactional
     public Product saveOrUpdate(Product product) {
         return productRepository.save(product);
     }
 
     @Override
+    @Transactional
     public void delete(String id) {
         if (!productRepository.existsById(id)) {
             throw new ResourceNotFoundException("Product", "id", id);
@@ -44,6 +50,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    @Transactional
     public Product saveOrUpdateProductForm(ProductDTO productDTO) {
         Product product = productCommandToProduct.convert(productDTO);
 
@@ -61,16 +68,19 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Product> findByCategory(String categoryId) {
         return productRepository.findByCategoryId(categoryId);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Product> findBySeller(String sellerId) {
         return productRepository.findBySellerId(sellerId);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Product> searchByDescription(String description) {
         return productRepository.findByDescriptionContainingIgnoreCase(description);
     }

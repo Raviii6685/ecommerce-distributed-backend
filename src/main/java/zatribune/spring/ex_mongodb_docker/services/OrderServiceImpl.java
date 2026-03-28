@@ -68,17 +68,20 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Order> getUserOrders(String userId) {
         return orderRepository.findByUserIdOrderByCreatedAtDesc(userId);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Order getOrderById(String orderId) {
         return orderRepository.findById(orderId)
                 .orElseThrow(() -> new ResourceNotFoundException("Order", "id", orderId));
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Order> getAllOrders() {
         return orderRepository.findAll();
     }
