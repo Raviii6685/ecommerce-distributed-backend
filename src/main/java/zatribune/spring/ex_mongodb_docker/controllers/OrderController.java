@@ -2,6 +2,9 @@ package zatribune.spring.ex_mongodb_docker.controllers;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -11,8 +14,6 @@ import zatribune.spring.ex_mongodb_docker.entities.Order;
 import zatribune.spring.ex_mongodb_docker.entities.OrderStatus;
 import zatribune.spring.ex_mongodb_docker.entities.User;
 import zatribune.spring.ex_mongodb_docker.services.OrderService;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api")
@@ -31,8 +32,10 @@ public class OrderController {
 
     @GetMapping("/orders")
     @PreAuthorize("isAuthenticated()")
-    public List<Order> getMyOrders(@AuthenticationPrincipal User user) {
-        return orderService.getUserOrders(user.getId());
+    public Page<Order> getMyOrders(
+            @AuthenticationPrincipal User user,
+            @PageableDefault(size = 10) Pageable pageable) {
+        return orderService.getUserOrders(user.getId(), pageable);
     }
 
     @GetMapping("/orders/{id}")
@@ -61,8 +64,8 @@ public class OrderController {
 
     @GetMapping("/admin/orders")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public List<Order> getAllOrders() {
-        return orderService.getAllOrders();
+    public Page<Order> getAllOrders(@PageableDefault(size = 20) Pageable pageable) {
+        return orderService.getAllOrders(pageable);
     }
 
     @PutMapping("/admin/orders/{id}/status")

@@ -2,6 +2,9 @@ package zatribune.spring.ex_mongodb_docker.controllers;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -10,8 +13,6 @@ import zatribune.spring.ex_mongodb_docker.converters.ProductToProductCommand;
 import zatribune.spring.ex_mongodb_docker.dto.ProductDTO;
 import zatribune.spring.ex_mongodb_docker.entities.Product;
 import zatribune.spring.ex_mongodb_docker.services.ProductService;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/products")
@@ -22,22 +23,21 @@ public class ProductController {
     private final ProductToProductCommand productToProductCommand;
 
     @GetMapping
-    public ResponseEntity<List<ProductDTO>> listProducts(
+    public ResponseEntity<Page<ProductDTO>> listProducts(
             @RequestParam(required = false) String categoryId,
-            @RequestParam(required = false, name = "q") String searchQuery) {
-        
-        List<Product> products;
+            @RequestParam(required = false, name = "q") String searchQuery,
+            @PageableDefault(size = 10, sort = "createdAt") Pageable pageable) {
+
+        Page<Product> products;
         if (categoryId != null && !categoryId.isEmpty()) {
-            products = productService.findByCategory(categoryId);
+            products = productService.findByCategory(categoryId, pageable);
         } else if (searchQuery != null && !searchQuery.isEmpty()) {
-            products = productService.searchByDescription(searchQuery);
+            products = productService.searchByDescription(searchQuery, pageable);
         } else {
-            products = productService.listAll();
+            products = productService.listAll(pageable);
         }
-        
-        List<ProductDTO> dtos = products.stream()
-                .map(productToProductCommand::convert)
-                .toList();
+
+        Page<ProductDTO> dtos = products.map(productToProductCommand::convert);
         return ResponseEntity.ok(dtos);
     }
 

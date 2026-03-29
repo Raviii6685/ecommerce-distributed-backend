@@ -1,15 +1,15 @@
 package zatribune.spring.ex_mongodb_docker.controllers;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import zatribune.spring.ex_mongodb_docker.dto.CategoryDTO;
 import zatribune.spring.ex_mongodb_docker.entities.Category;
 import zatribune.spring.ex_mongodb_docker.services.CategoryService;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/categories")
@@ -19,10 +19,8 @@ public class CategoryController {
     private final CategoryService categoryService;
 
     @GetMapping
-    public List<CategoryDTO> getAllCategories() {
-        return categoryService.getAllCategories().stream()
-                .map(this::mapToDTO)
-                .collect(Collectors.toList());
+    public Page<CategoryDTO> getAllCategories(@PageableDefault(size = 10) Pageable pageable) {
+        return categoryService.getAllCategories(pageable).map(this::mapToDTO);
     }
 
     @PostMapping

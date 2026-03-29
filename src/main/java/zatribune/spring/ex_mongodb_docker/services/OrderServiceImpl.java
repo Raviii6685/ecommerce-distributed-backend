@@ -2,6 +2,8 @@ package zatribune.spring.ex_mongodb_docker.services;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import zatribune.spring.ex_mongodb_docker.dto.OrderItemRequest;
@@ -75,6 +77,12 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     @Transactional(readOnly = true)
+    public Page<Order> getUserOrders(String userId, Pageable pageable) {
+        return orderRepository.findByUserIdOrderByCreatedAtDesc(userId, pageable);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
     public Order getOrderById(String orderId) {
         return orderRepository.findById(orderId)
                 .orElseThrow(() -> new ResourceNotFoundException("Order", "id", orderId));
@@ -84,6 +92,12 @@ public class OrderServiceImpl implements OrderService {
     @Transactional(readOnly = true)
     public List<Order> getAllOrders() {
         return orderRepository.findAll();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<Order> getAllOrders(Pageable pageable) {
+        return orderRepository.findAll(pageable);
     }
 
     @Override

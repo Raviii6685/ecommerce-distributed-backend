@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import org.springframework.transaction.annotation.Transactional;
@@ -24,10 +26,16 @@ public class ProductServiceImpl implements ProductService {
     private final ProductCommandToProduct productCommandToProduct;
 
     @Override
-    @Transactional(readOnly = true) 
+    @Transactional(readOnly = true)
     @Cacheable(value = "products")
     public List<Product> listAll() {
         return productRepository.findAll();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<Product> listAll(Pageable pageable) {
+        return productRepository.findAll(pageable);
     }
 
     @Override
@@ -83,6 +91,12 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     @Transactional(readOnly = true)
+    public Page<Product> findByCategory(String categoryId, Pageable pageable) {
+        return productRepository.findByCategoryId(categoryId, pageable);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
     public List<Product> findBySeller(String sellerId) {
         return productRepository.findBySellerId(sellerId);
     }
@@ -91,5 +105,11 @@ public class ProductServiceImpl implements ProductService {
     @Transactional(readOnly = true)
     public List<Product> searchByDescription(String description) {
         return productRepository.findByDescriptionContainingIgnoreCase(description);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<Product> searchByDescription(String description, Pageable pageable) {
+        return productRepository.findByDescriptionContainingIgnoreCase(description, pageable);
     }
 }
