@@ -3,10 +3,6 @@ spring:
     name: product-management
 
   # Exclude Redis auto-config when not available
-  autoconfigure:
-    exclude:
-      - org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration
-      - org.springframework.boot.autoconfigure.data.redis.RedisRepositoriesAutoConfiguration
 
   # H2 In-Memory (default dev profile)
   datasource:
@@ -47,12 +43,12 @@ spring:
       on-profile: prod
   datasource:
     primary:
-      jdbc-url: jdbc:postgresql://10.128.0.4:5432/ecommerce_db
+      jdbc-url: jdbc:postgresql://127.0.0.1:5432/ecommerce_db
       username: postgres
       password: postgres123
       driver-class-name: org.postgresql.Driver
     replica:
-      jdbc-url: jdbc:postgresql://10.128.0.2:5432/ecommerce_db
+      jdbc-url: jdbc:postgresql://10.128.0.4:5432/ecommerce_db
       username: postgres
       password: postgres123
       driver-class-name: org.postgresql.Driver
@@ -68,7 +64,7 @@ spring:
   h2:
     console:
       enabled: false
-
-  redis:
-    host: localhost
-    port: 6379  
+  data:
+    redis:
+      host: localhost
+      port: 6379  

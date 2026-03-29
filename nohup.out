@@ -1,0 +1,62 @@
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.4.4)
+
+2026-03-29T11:06:22.910Z  INFO 17956 --- [product-management] [           main] z.s.e.SpringBootMongodbApplication       : Starting SpringBootMongodbApplication v1.0.0 using Java 21.0.10 with PID 17956 (/home/ravikhichar9715/ecommerce-distributed-backend/target/product-management-1.0.0.jar started by ravikhichar9715 in /home/ravikhichar9715/ecommerce-distributed-backend)
+2026-03-29T11:06:22.921Z  INFO 17956 --- [product-management] [           main] z.s.e.SpringBootMongodbApplication       : The following 1 profile is active: "prod"
+2026-03-29T11:06:26.282Z  INFO 17956 --- [product-management] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2026-03-29T11:06:26.286Z  INFO 17956 --- [product-management] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-03-29T11:06:26.684Z  INFO 17956 --- [product-management] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 379 ms. Found 6 JPA repository interfaces.
+2026-03-29T11:06:26.747Z  INFO 17956 --- [product-management] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2026-03-29T11:06:26.750Z  INFO 17956 --- [product-management] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2026-03-29T11:06:26.785Z  INFO 17956 --- [product-management] [           main] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface zatribune.spring.ex_mongodb_docker.repositories.CategoryRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-03-29T11:06:26.787Z  INFO 17956 --- [product-management] [           main] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface zatribune.spring.ex_mongodb_docker.repositories.OrderItemRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-03-29T11:06:26.788Z  INFO 17956 --- [product-management] [           main] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface zatribune.spring.ex_mongodb_docker.repositories.OrderRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-03-29T11:06:26.789Z  INFO 17956 --- [product-management] [           main] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface zatribune.spring.ex_mongodb_docker.repositories.ProductRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-03-29T11:06:26.789Z  INFO 17956 --- [product-management] [           main] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface zatribune.spring.ex_mongodb_docker.repositories.RoleRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-03-29T11:06:26.791Z  INFO 17956 --- [product-management] [           main] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface zatribune.spring.ex_mongodb_docker.repositories.UserRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-03-29T11:06:26.791Z  INFO 17956 --- [product-management] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 20 ms. Found 0 Redis repository interfaces.
+2026-03-29T11:06:28.814Z  INFO 17956 --- [product-management] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2026-03-29T11:06:28.893Z  INFO 17956 --- [product-management] [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 5767 ms
+>>> ROUTING TO: primary
+>>> ROUTING TO: primary
+2026-03-29T11:06:29.873Z  INFO 17956 --- [product-management] [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-03-29T11:06:30.011Z  INFO 17956 --- [product-management] [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.11.Final
+2026-03-29T11:06:30.090Z  INFO 17956 --- [product-management] [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-03-29T11:06:30.715Z  INFO 17956 --- [product-management] [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+>>> ROUTING TO: primary
+2026-03-29T11:06:30.781Z  INFO 17956 --- [product-management] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-03-29T11:06:31.047Z  INFO 17956 --- [product-management] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@30eb55c9
+2026-03-29T11:06:31.050Z  INFO 17956 --- [product-management] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+>>> ROUTING TO: primary
+2026-03-29T11:06:31.163Z  WARN 17956 --- [product-management] [           main] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-03-29T11:06:31.200Z  INFO 17956 --- [product-management] [           main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'org.springframework.jdbc.datasource.LazyConnectionDataSourceProxy@27d98bef']
+	Database driver: undefined/unknown
+	Database version: 14.22
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-03-29T11:06:34.062Z  INFO 17956 --- [product-management] [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+>>> ROUTING TO: primary
+2026-03-29T11:06:34.716Z  INFO 17956 --- [product-management] [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-03-29T11:06:36.077Z  INFO 17956 --- [product-management] [           main] eAuthenticationProviderManagerConfigurer : Global AuthenticationManager configured with AuthenticationProvider bean with name authenticationProvider
+2026-03-29T11:06:36.077Z  WARN 17956 --- [product-management] [           main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used by Spring Security for automatically configuring username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider. If the current configuration is intentional, to turn off this warning, increase the logging level of 'org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer' to ERROR
+2026-03-29T11:06:36.586Z  WARN 17956 --- [product-management] [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-03-29T11:06:38.657Z  INFO 17956 --- [product-management] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2026-03-29T11:06:38.688Z  INFO 17956 --- [product-management] [           main] z.s.e.SpringBootMongodbApplication       : Started SpringBootMongodbApplication in 17.249 seconds (process running for 18.56)
+2026-03-29T11:06:38.694Z  INFO 17956 --- [product-management] [ionShutdownHook] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2026-03-29T11:06:38.701Z  INFO 17956 --- [product-management] [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2026-03-29T11:06:38.753Z  INFO 17956 --- [product-management] [ionShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-03-29T11:06:38.757Z  INFO 17956 --- [product-management] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-03-29T11:06:38.769Z  INFO 17956 --- [product-management] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2026-03-29T11:06:38.805Z  INFO 17956 --- [product-management] [           main] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
