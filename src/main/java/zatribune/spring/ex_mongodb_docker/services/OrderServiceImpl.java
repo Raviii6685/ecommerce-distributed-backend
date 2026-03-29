@@ -2,10 +2,14 @@ package zatribune.spring.ex_mongodb_docker.services;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+
 import zatribune.spring.ex_mongodb_docker.dto.OrderItemRequest;
 import zatribune.spring.ex_mongodb_docker.dto.OrderRequest;
 import zatribune.spring.ex_mongodb_docker.entities.*;
@@ -69,14 +73,11 @@ public class OrderServiceImpl implements OrderService {
         return orderRepository.save(order);
     }
 
-    @Override
-    @Transactional(readOnly = true)
-    public List<Order> getUserOrders(String userId) {
-        return orderRepository.findByUserIdOrderByCreatedAtDesc(userId);
-    }
+    
 
     @Override
     @Transactional(readOnly = true)
+
     public Page<Order> getUserOrders(String userId, Pageable pageable) {
         return orderRepository.findByUserIdOrderByCreatedAtDesc(userId, pageable);
     }
@@ -88,14 +89,11 @@ public class OrderServiceImpl implements OrderService {
                 .orElseThrow(() -> new ResourceNotFoundException("Order", "id", orderId));
     }
 
-    @Override
-    @Transactional(readOnly = true)
-    public List<Order> getAllOrders() {
-        return orderRepository.findAll();
-    }
+    
 
     @Override
     @Transactional(readOnly = true)
+    @Cacheable(value = "orders", key = "#pageable.pageNumber + '-' + #pageable.pageSize")
     public Page<Order> getAllOrders(Pageable pageable) {
         return orderRepository.findAll(pageable);
     }

@@ -27,13 +27,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     @Transactional(readOnly = true)
-    @Cacheable(value = "products")
-    public List<Product> listAll() {
-        return productRepository.findAll();
-    }
-
-    @Override
-    @Transactional(readOnly = true)
+    @Cacheable(value = "products", key = "#pageable.pageNumber + '-' + #pageable.pageSize")
     public Page<Product> listAll(Pageable pageable) {
         return productRepository.findAll(pageable);
     }
@@ -82,15 +76,10 @@ public class ProductServiceImpl implements ProductService {
         return savedProduct;
     }
 
-    @Override
-    @Transactional(readOnly = true)
-    @Cacheable(value = "products-by-category", key = "#categoryId")
-    public List<Product> findByCategory(String categoryId) {
-        return productRepository.findByCategoryId(categoryId);
-    }
 
     @Override
-    @Transactional(readOnly = true)
+    @Transactional(readOnly = true) 
+    @Cacheable(value = "products-by-category", key = "#categoryId + '-' + #pageable.pageNumber")
     public Page<Product> findByCategory(String categoryId, Pageable pageable) {
         return productRepository.findByCategoryId(categoryId, pageable);
     }
@@ -101,14 +90,11 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.findBySellerId(sellerId);
     }
 
-    @Override
-    @Transactional(readOnly = true)
-    public List<Product> searchByDescription(String description) {
-        return productRepository.findByDescriptionContainingIgnoreCase(description);
-    }
+   
 
     @Override
     @Transactional(readOnly = true)
+    @Cacheable(value = "products-by-description", key = "#description + '-' + #pageable.pageNumber")
     public Page<Product> searchByDescription(String description, Pageable pageable) {
         return productRepository.findByDescriptionContainingIgnoreCase(description, pageable);
     }

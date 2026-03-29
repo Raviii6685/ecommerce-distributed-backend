@@ -12,7 +12,7 @@ import zatribune.spring.ex_mongodb_docker.entities.Category;
 import zatribune.spring.ex_mongodb_docker.exception.ResourceNotFoundException;
 import zatribune.spring.ex_mongodb_docker.repositories.CategoryRepository;
 
-import java.util.List;
+
 
 @Service
 @RequiredArgsConstructor
@@ -20,16 +20,11 @@ public class CategoryServiceImpl implements CategoryService {
 
     private final CategoryRepository categoryRepository;
 
-    @Override
-    @Transactional(readOnly = true)
-    @Cacheable("categories")
-    public List<Category> getAllCategories() {
-        return categoryRepository.findAll();
-    }
+   
 
     @Override
     @Transactional(readOnly = true)
-    @Cacheable("categories")
+    @Cacheable(value = "categories", key = "#pageable.pageNumber + '-' + #pageable.pageSize")
     public Page<Category> getAllCategories(Pageable pageable) {
         return categoryRepository.findAll(pageable);
     }

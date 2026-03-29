@@ -9,7 +9,6 @@ import java.util.List;
 
 public interface ProductService {
 
-    List<Product> listAll();
 
     Page<Product> listAll(Pageable pageable);
 
@@ -21,13 +20,13 @@ public interface ProductService {
 
     Product saveOrUpdateProductForm(ProductDTO productDTO);
 
-    List<Product> findByCategory(String categoryId);
+    
 
     Page<Product> findByCategory(String categoryId, Pageable pageable);
 
     List<Product> findBySeller(String sellerId);
 
-    List<Product> searchByDescription(String description);
+
 
     Page<Product> searchByDescription(String description, Pageable pageable);
 }
