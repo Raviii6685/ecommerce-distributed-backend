@@ -1,0 +1,65 @@
+1. nc -zv 10.128.0.3 5432 explain this command in detail bhai ?
+2. we have to manually set the leader in the application.yaml file of the spring boot application ? is there any automation way ?
+3. what is the importance of the file /var/lib/postgresql/14/main/pg_hba.conf (how can it be used?)
+4 .sudo -u postgres psql -c "SELECT pg_reload_conf()"; ? what does this command does ?
+5. also to use this leader-replica model we have to make a DataSoruceConfig.java file ? why do we have to make this file and what configuration do we give in this file ?
+6. bhai apne pass koi juggad h pg_hba.conf mein manually entry dalne kii vjah like jab bhi leder chnage hota h toh hmmme manually usme other connection kii entry fill knri pdeti h but kyta hum manuall ke vjahye isko automatcially kr paynge kabhi ?
+7.  host    all             all             10.128.0.0/20        md5
+    host    replication     replicator      10.128.0.0/20        md5
+    in this are we giving access to all the ...connection but ye i guess harmful practice h ?
+8. bhai hum fetch = FetchType.LAZY rakhte h tbb ek issue aata h serialization mein usko kese resolve kre ?
+9. what is the diufference between request through api testing and using pgbench testing how these two differncet metrcies can mean ? who should we give more advantage and what should ... like the differecne we should keep in mind while using these two differentl? and should we use this seperately ? or is any one better than the other ?
+10. in indutry do we use only k6 for testing ?
+11. p(95) > 500ms consistently → scale out karo
+    Error rate > 1% → scale out karo
+    this are the scale metrcies i guess 
+    or how cna we find and should we find our scale out point even before we deploy our app ?
+    on average how much load can a vm instacnes take for like 
+    concureent users / read/write request ratios ...each type of load on avergae how much it can take ?
+    how to know if we have made our app ...that app is underutilizing the resources we have given or over utilizing the resources ? how can we find out this just based on k6 results metrices or we have to use some other tools as well ? 
+    do we have only 4 types of testing like 
+        1. load testing
+        2. Stress testing
+        3. Failover testing 
+        4. replication testing 
+        ...in the above 4 each testing give what result to us for our use ...
+12. tail -f /proc/$(pgrep k6)/fd/1 2>/dev/null what dies this do ?
+13. how can we fix problem of spring hardcoded leader and replica ips 
+14. how can we automate the process of Tl mistmatch to be synced with all 
+15. bhai pgbouncer.ini file mein hum dbs and pgbouncer dete h inki kuch properties bhi hoti h toh tumm mujje voo sarii important properties bta do ...jo as an engineer mujje pta honi chahiya ?
+16. pg bouncer mein ek property h like max connection and pool sizee pool mode ye Performance down bhi toh krr skhte h kya app kii agar shi se configure nhi kiya toh ?
+17. bhai pgbouncer.ini file ke sari precautions ; benefits ; use cases ; alternative and ;why to use ; when to use btado ?
+18. pg bouncer ek hii port pe kaam krta h iska kya mtlb h ?
+19. and pgbouncer ko hum manlo leader and replicas ke liya ..,.configure krna chahte h. toh voo kese krenge kyuiiii....jbb hum application.yml mein leader and replica ports and address dete h toh ip toh same ho skhte h local host but replica and leader ke lia hume port toh differnet rakhna pdega na so uske liya hum kya kre ...ye toh ek prkar se hardcode hogya kyukiii.leader follower bn skhta h and follower leader bn skhta ....ye real mein issue bnega yaa bss beham h mera ?
+20. Port 5432 → Primary (writes)
+    Port 5433 → Replica round robin (reads) ye kese implement krenge hum sare detail mein steps dedo algo mtt dena bss theory mein step kese kya conjfigure krne kuii zrorot h ?
+21. Leader change hota hai
+      ↓
+Patroni → /etc/patroni/callbacks/on_role_change.sh
+      ↓
+Script → PgBouncer config update
+      ↓
+PgBouncer reload
+      ↓
+Spring Boot automatically naye Leader pe! give me steps for tyhis bhai ? kon konsi config krni pdti h hume iske lliya?
+22. patroni mein call back script kya hoit h and hume kabb use krni chahiya ?
+23. kya kya add krte h hum in script mein ?
+24. postgresql:
+  callbacks:
+    on_role_change: /etc/patroni/callbacks/on_role_change.sh
+    on_start: /etc/patroni/callbacks/on_role_change.sh
+    on_restart: /etc/patroni/callbacks/on_role_change.sh we ahve to add this ..so automatcially leader is changed in pgbouncer as well ?
+25. Leader change hota hai
+      ↓
+Patroni → etcd mein Leader IP store karta hai
+      ↓
+PgBouncer → etcd se Leader IP fetch karta hai
+      ↓
+Automatic routing — No SSH needed! how to implemet this give me all configs for this also ?
+26. bootstrap:
+  dcs:
+    postgresql:
+      use_pg_rewind: true
+      use_slots: true why and when do we have to add this in our patroni.yml file ?
+27. we have option to write a script to change leader using /etc/PgBouncer/update-leader.sh
+28. 

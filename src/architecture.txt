@@ -1,0 +1,126 @@
+postgres-ha-cluster/
+│
+├── infra/                    # Terraform IaC
+│   ├── main.tf               # GCP VMs
+│   ├── variables.tf
+│   └── outputs.tf
+│
+├── scripts/                  # Shell automation
+│   ├── setup-primary.sh
+│   ├── setup-replica.sh
+│   └── setup-patroni.sh
+│
+├── config/                   # Patroni + etcd configs
+│   ├── patroni-primary.yml
+│   └── patroni-replica.yml
+│
+├── app/                      # Spring Boot project
+│   └── (tera existing project)
+│
+├── docs/                     # Architecture diagrams
+│   ├── architecture.png
+│   └── failover-flow.png
+│
+├── load-testing/             # pgbench results
+│   └── results.md
+│
+└── README.md
+
+
+Spring Boot App
+      ↓
+PgBouncer Connection Pool
+      ↓
+Write → Primary (postgresql1)
+Read  → Replica (postgresql0 / postgresql2)
+      ↓
+Failover? → Patroni handles it
+App automatically reconnects!
+
+
+
+## left to do ?
+5. Throughput vs Latency Tradeoff
+10 clients  → low latency, low throughput
+100 clients → medium latency, high throughput  
+1000 clients → high latency, ???
+
+
+2. Replication Lag Under Load
+1000 concurrent writes → Primary pe
+      ↓
+Replica kitne ms peeche hai?
+Lag: 0ms → 50ms → 200ms → ???
+
+3. Failover Under Live Traffic
+1000 requests/second chal rahi hain
+Primary crash karo
+      ↓
+Kitni requests fail huin?
+Kitne seconds mein recover hua?
+
+
+## future to do ?
+Load Balancer (GCP Cloud Load Balancing)
+        ↓
+Spring Boot VM1  +  Spring Boot VM2
+        ↓                ↓
+   PostgreSQL HA Cluster (3 nodes)
+
+
+Bhai documentation mein yeh include karenge:
+
+**1. README.md — Main file**
+```
+- Project overview
+- Architecture diagram
+- Tech stack
+- Setup guide
+```
+
+**2. Architecture**
+```
+- System design diagram
+- Read/Write split flow
+- Failover flow
+- Redis caching layer
+```
+
+**3. Performance Results**
+```
+- Load test: 100 VUs → 17ms
+- Stress test: 1500 VUs → 8.88s
+- Breaking point: X VUs → 200ms
+- Redis before/after comparison
+- Failover RTO measurement
+```
+
+**4. Infrastructure**
+```
+- Terraform files (VMs)
+- Shell scripts (setup automation)
+- Patroni configs
+- k6 test scripts
+```
+
+**5. Learnings**
+```
+- DDIA concepts practically implemented
+- Failures jo hue aur kyun
+- Production considerations
+```
+
+---
+
+**Sabse powerful cheez resume ke liye:**
+
+```
+"Designed and implemented production-grade 
+PostgreSQL HA cluster with:
+- Patroni + etcd automatic failover (RTO: Xs)
+- Read/Write split across 3 nodes
+- Redis caching (Xms → Xms improvement)
+- Load tested: 191 req/s, p95 17ms"
+```
+
+Pehle test khatam karo — failover karo — Redis add karo — phir documentation! 🚀
