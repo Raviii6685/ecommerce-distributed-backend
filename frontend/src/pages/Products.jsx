@@ -22,10 +22,11 @@ export default function Products() {
         getProducts(selectedCategory, searchQuery),
         getCategories()
       ]);
-      setProducts(productsRes.data);
+
+ setProducts(productsRes.data.content || productsRes.data || []);
       // categories might be loaded only once in a real app
       if (categories.length === 0) {
-        setCategories(categoriesRes.data);
+setCategories(categoriesRes.data.content || categoriesRes.data || []);
       }
     } catch (err) {
       console.error('Failed to load data', err);

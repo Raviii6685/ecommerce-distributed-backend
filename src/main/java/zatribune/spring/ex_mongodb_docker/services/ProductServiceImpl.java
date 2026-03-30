@@ -68,6 +68,7 @@ public class ProductServiceImpl implements ProductService {
             Product existing = productRepository.findById(productDTO.getId())
                     .orElseThrow(() -> new ResourceNotFoundException("Product", "id", productDTO.getId()));
             product.setSellerId(existing.getSellerId());
+		product.setVersion(existing.getVersion());
             product.setCategory(existing.getCategory());
         }
 

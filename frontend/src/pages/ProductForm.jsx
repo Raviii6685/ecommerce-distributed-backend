@@ -17,8 +17,7 @@ export default function ProductForm() {
     const initForm = async () => {
       try {
         const catsRes = await getCategories();
-        setCategories(catsRes.data);
-        
+ setCategories(catsRes.data.content || catsRes.data || []);        
         if (isEdit) {
           const res = await getProduct(id);
           setForm({

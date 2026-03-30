@@ -1,6 +1,7 @@
 package zatribune.spring.ex_mongodb_docker.services;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.cache.annotation.Cacheable;
@@ -32,6 +33,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     @Transactional
+    @CacheEvict(value = {"admin-orders"}, allEntries = true)
     public Order placeOrder(String userId, OrderRequest request) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("User", "id", userId));
@@ -77,7 +79,6 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     @Transactional(readOnly = true)
-
     public Page<Order> getUserOrders(String userId, Pageable pageable) {
         return orderRepository.findByUserIdOrderByCreatedAtDesc(userId, pageable);
     }
@@ -93,13 +94,14 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     @Transactional(readOnly = true)
-    @Cacheable(value = "orders", key = "#pageable.pageNumber + '-' + #pageable.pageSize")
-    public Page<Order> getAllOrders(Pageable pageable) {
+    @Cacheable(value = "admin-orders", key = "#pageable.pageNumber + '-' + #pageable.pageSize")    
+public Page<Order> getAllOrders(Pageable pageable) {
         return orderRepository.findAll(pageable);
     }
 
     @Override
     @Transactional
+    @CacheEvict(value = {"admin-orders"}, allEntries = true)  
     public Order updateOrderStatus(String orderId, OrderStatus status) {
         Order order = getOrderById(orderId);
         
