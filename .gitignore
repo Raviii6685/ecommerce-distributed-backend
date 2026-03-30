@@ -4,3 +4,7 @@ results.json
 redis-breaking-point.json
 *.json
 *.jar
+app.log
+*.log
+app.log
+*.log
